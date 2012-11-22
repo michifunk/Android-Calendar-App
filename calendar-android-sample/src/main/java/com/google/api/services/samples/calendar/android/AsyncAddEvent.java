@@ -44,8 +44,8 @@ class AsyncAddEvent extends AsyncTask<Void, Void, Void> {
     
     Event event = new Event();    
     event.setSummary("Event suchen");
-    event.setLocation("Berlin HWR");
-    event.setColorId("5"); //11 -> rot
+    event.setLocation("Berlin HWR Schöneberg");
+    event.setColorId("7"); //11 -> rot
        
     Date startDate = new Date();
     Date endDate = new Date(startDate.getTime() + 3600000);
