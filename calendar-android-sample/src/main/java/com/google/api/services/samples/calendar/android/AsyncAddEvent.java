@@ -3,6 +3,7 @@ package com.google.api.services.samples.calendar.android;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.Events;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -42,27 +43,47 @@ class AsyncAddEvent extends AsyncTask<Void, Void, Void> {
     String calendarId = calendarSample.calendars.get(calendarIndex).id;
     
     Event event = new Event();    
-    event.setSummary("Test-Event-Drei");
+    event.setSummary("Event suchen");
     event.setLocation("Berlin HWR");
-    event.setColorId("11"); //11 -> rot
-    
-    
+    event.setColorId("5"); //11 -> rot
+       
     Date startDate = new Date();
     Date endDate = new Date(startDate.getTime() + 3600000);
     DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
     event.setStart(new EventDateTime().setDateTime(start));
     DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
     event.setEnd(new EventDateTime().setDateTime(end));
-    
-    
-    
-       
+        
     
     try {
-      Event createdEvent = client.events().insert(calendarId, event).execute();
-      
+      Event createdEvent = client.events().insert(calendarId, event).execute();      
       Log.d(TAG, "Event-ID: " + createdEvent.getId());
+      
+      
+      //In Events nach bestimmter ID suchen
+      String sEvent = createdEvent.getId();
+      //String sTestId = "123456";
+      Event foundEvent = client.events().get(calendarId, sEvent).execute();
+      Log.d(TAG, "foundEvent-ID: " + foundEvent.getId());
+      
+      
+      //Liste aller events eines Kalenders ausgeben
+      Events eventsList= client.events().list(calendarId).execute();
+      while (true) {
+        Log.d(TAG, "Eventliste:");
+        for (Event eItem : eventsList.getItems()) 
+        {
+          Log.d(TAG, eItem.getSummary());
+        }
+        String pageToken = eventsList.getNextPageToken();
+        if (pageToken != null && !pageToken.isEmpty()) {    //Achtung, 'isEmpty() benötigt min API9. Hab ich im Manifest geändert.
+          eventsList = client.events().list("primary").setPageToken(pageToken).execute();
+        } else {
+          break;
+        }
+      }
   
+      
     } catch (IOException e) {
       calendarSample.handleGoogleException(e);
     } finally {

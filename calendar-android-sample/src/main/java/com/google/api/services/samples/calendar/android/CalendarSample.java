@@ -272,52 +272,8 @@ public final class CalendarSample extends ListActivity {
       case CONTEXT_DELETE:
         new AsyncDeleteCalendar(this, calendarIndex).execute();
         return true;
-      case CONTEXT_NEWEVENT:
-        new AsyncAddEvent(this, calendarIndex).execute();
-        
-        
-        /*
-        Event event = new Event();
-
-        event.setSummary("Test-Event");
-        event.setLocation("Manteuffelstr");
-        
-        System.out.println("Test");
-        Log.d(TAG, "Info: Step1");
-
-        ArrayList<EventAttendee> attendees = new ArrayList<EventAttendee>();
-        attendees.add(new EventAttendee().setEmail("michifunk@yahoo.de"));
-        //..
-        event.setAttendees(attendees);
-
-        Date startDate = new Date();
-        Date endDate = new Date(startDate.getTime() + 3600000);
-        DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
-        event.setStart(new EventDateTime().setDateTime(start));
-        DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
-        event.setEnd(new EventDateTime().setDateTime(end));
-        
-        Log.d(TAG, "Info: Event sucessfully set"); 
-        
-        Event createdEvent;
-           
-        try {
-          String calendarId = calendars.get(calendarIndex).id;
-          Log.d(TAG, "Info: " + calendarId); 
-          //createdEvent = client.events().insert(calendarId, event).execute();
-          createdEvent = client.events().insert("primary", event).execute();
-          createdEvent = client.events().insert(calendarId, event).execute();
-          
-          
-          Log.d(TAG, "Info: Step2");        
-          System.out.println(createdEvent.getId());
-          
-        } catch (IOException exception) {
-          // TODO Auto-generated catch block
-          exception.printStackTrace();
-        }       
-        */
-        
+      case CONTEXT_NEWEVENT:    //Event einfügen
+        new AsyncAddEvent(this, calendarIndex).execute();       
         return true; 
         
         
