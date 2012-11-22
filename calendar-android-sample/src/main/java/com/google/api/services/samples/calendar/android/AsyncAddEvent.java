@@ -73,7 +73,7 @@ class AsyncAddEvent extends AsyncTask<Void, Void, Void> {
         Log.d(TAG, "Eventliste:");
         for (Event eItem : eventsList.getItems()) 
         {
-          Log.d(TAG, eItem.getSummary());
+          Log.d(TAG, "Event-Name: " + eItem.getSummary());
         }
         String pageToken = eventsList.getNextPageToken();
         if (pageToken != null && !pageToken.isEmpty()) {    //Achtung, 'isEmpty() benötigt min API9. Hab ich im Manifest geändert.
