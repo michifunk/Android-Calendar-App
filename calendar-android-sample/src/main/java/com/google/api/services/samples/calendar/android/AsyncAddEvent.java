@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Asynchronously insert an event to a calendar with a progress dialog.
+ * Asynchronously inserts an event to a calendar with a progress dialog.
  *
  * @author Michael Funk
  */

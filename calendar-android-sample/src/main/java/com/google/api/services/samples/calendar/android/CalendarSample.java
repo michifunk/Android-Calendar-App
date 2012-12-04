@@ -133,6 +133,12 @@ public final class CalendarSample extends ListActivity {
     accountManager = new GoogleAccountManager(this);
     registerForContextMenu(getListView());
     gotAccount();
+    
+    
+    /* DB Implementations (MEF) */
+    DBActions dbActions = new DBActions();
+    dbActions.initialization(this);
+    
   }
 
   @SuppressWarnings("deprecation")
