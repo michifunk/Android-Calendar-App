@@ -88,6 +88,8 @@ public final class CalendarSample extends ListActivity {
   private static final int CONTEXT_DELETE = 1;
   
   private static final int CONTEXT_NEWEVENT = 2;    //test
+  
+  private static final int CONTEXT_SYNCEVENTS = 3;  //add events from DB
 
   private static final int REQUEST_AUTHENTICATE = 0;
 
@@ -261,6 +263,7 @@ public final class CalendarSample extends ListActivity {
     menu.add(0, CONTEXT_EDIT, 0, "Update Title");
     menu.add(0, CONTEXT_DELETE, 0, "Delete");
     menu.add(0, CONTEXT_NEWEVENT, 0, "Create new event");
+    menu.add(0, CONTEXT_SYNCEVENTS, 0, "Sync events with DB");
   }
 
   @Override
@@ -275,14 +278,17 @@ public final class CalendarSample extends ListActivity {
         entry.setSummary(calendarInfo.summary + " UPDATED " + new DateTime(new Date()));
         new AsyncUpdateCalendar(this, calendarIndex, entry).execute();
         return true;
-      case CONTEXT_DELETE:
+      case CONTEXT_DELETE: 
         new AsyncDeleteCalendar(this, calendarIndex).execute();
         return true;
       case CONTEXT_NEWEVENT:    //Event einfügen
         new AsyncAddEvent(this, calendarIndex).execute();       
-        return true; 
-        
-        
+        return true;
+      case CONTEXT_SYNCEVENTS:    //Event einfügen
+        UpdateEvents updateEvents = new UpdateEvents();
+        updateEvents.checkEvents(this, this, calendarIndex);
+        return true;
+               
       default:
         return super.onContextItemSelected(item);
     }

@@ -26,14 +26,14 @@ import android.util.Log;
  */
 public class InitDB extends SQLiteOpenHelper implements ITblTest{
 
-  private static final boolean DBG = true;   //WTF is this? DBG??
+  private static final boolean DBG = true;   //DBG for debugging
   private static final String CNAME = "InitDB.";
   
   /** Name der Datenbankdatei. */
 private static final String DB_NAME = "dbtest.db";
 
 /** Version des Schemas. */
-private static final int DB_VERSION = 2;    //Erhöhen wenn Tabellenschema geändert wird!!
+private static final int DB_VERSION = 3;    //Erhöhen wenn Tabellenschema geändert wird!!
 
 /**
  * Der Konstruktor benötigt als Input-Parameter den Context der Anwendung.
@@ -110,23 +110,24 @@ private void erzeugeTestdaten( SQLiteDatabase db ) {
       if( DBG ) Log.v( TAG, "entering..." );      
       
   final SQLiteStatement stm = db.compileStatement( 
-                 "INSERT INTO " + TBL_TEST    + "( " + 
-                       COL_VL_NR        + ", " + COL_VL_NAME          + ", " +                      
-                       COL_STUDIENGANG  + ", " + COL_MASTERSTUDIENGANG + ", " + 
-                       COL_DATUM +
-                 " ) VALUES( ?, ?, ?, ?, ? )" );
+                 "INSERT INTO " + TBL_TEST      + "( " + 
+                       COL_VL_NR                + ", " + 
+                       COL_VL_NAME              + ", " +                      
+                       COL_STUDIENGANG          + ", " + 
+                       COL_MASTERSTUDIENGANG    + ", " + 
+                       COL_DATUM                + " ) VALUES( ?, ?, ?, ?, ? )" );
   db.beginTransaction();
 
   try {      
       stm.bindLong  ( 1, 111111                  );
-      stm.bindString( 2, "Programmieren für Noobs"            );
+      stm.bindString( 2, "Programmieren für Noobs");
       stm.bindString( 3, "Wirtschaftsinformatik" );
       stm.bindLong  ( 4, 0                       );
       stm.bindString( 5, "2012-12-08"            );
       stm.executeInsert();
 
       stm.bindLong  ( 1, 222222                  );
-      stm.bindString( 2, "Angewandtes Prozess MGMT"        );
+      stm.bindString( 2, "Angewandtes Prozess MGMT");
       stm.bindString( 3, "Wirtschaftsinformatik" );
       stm.bindLong  ( 4, 1                       );
       stm.bindString( 5, "2012-12-09"            );

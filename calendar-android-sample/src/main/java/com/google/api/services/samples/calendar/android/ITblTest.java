@@ -47,18 +47,22 @@ public interface ITblTest {
    /** Ein Datum.<br>
     *   DATE */  
     String COL_DATUM = "geb_dat";
+    
+    /** Google-Event-ID, wird von Google vergeben */  
+    String COL_G_EVENT_ID = "G_eventID";
 
     /** Liste aller Attribute der Tabelle */
     String[] ALL_COLS_STUDENT = { COL_ID           , COL_VL_NR, 
                                       COL_VL_NAME         , COL_STUDIENGANG, 
-                                      COL_MASTERSTUDIENGANG, COL_DATUM };
+                                      COL_MASTERSTUDIENGANG, COL_DATUM, COL_G_EVENT_ID };
 
     /** Create table statement */
     String CREATE_TBL_TEST = "CREATE TABLE " + TBL_TEST + "(" +
-        COL_ID            + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-        COL_VL_NR         + " INTEGER NOT NULL, " +
-        COL_VL_NAME          + " TEXT NOT NULL, "    +
-        COL_STUDIENGANG   + " TEXT, "             +
-        COL_MASTERSTUDIENGANG + " BOOLEAN NOT NULL, " +
-        COL_DATUM  + " DATE );";       
+        COL_ID                  + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        COL_VL_NR               + " INTEGER NOT NULL, " +
+        COL_VL_NAME             + " TEXT NOT NULL, "    +
+        COL_STUDIENGANG         + " TEXT, "             +
+        COL_MASTERSTUDIENGANG   + " BOOLEAN NOT NULL, " +
+        COL_DATUM               + " DATE, "  +
+        COL_G_EVENT_ID          + " TEXT)";       
 }
