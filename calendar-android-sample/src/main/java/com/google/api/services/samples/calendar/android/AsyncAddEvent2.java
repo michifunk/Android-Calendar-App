@@ -37,7 +37,7 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
   private final int calendarIndex;
   private final String sVlName;
   private com.google.api.services.calendar.Calendar client;
-  private static final String TAG = "AsyncAddEvent Klasse";
+  private static final String TAG = "AsyncAddEvent-Klasse";
 
   AsyncAddEvent2(CalendarSample calendarSample, int calendarIndex, String sVlName) {
     this.calendarSample = calendarSample;
@@ -67,8 +67,7 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
     DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
     event.setStart(new EventDateTime().setDateTime(start));
     DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
-    event.setEnd(new EventDateTime().setDateTime(end));
-        
+    event.setEnd(new EventDateTime().setDateTime(end)); 
     
     try {
       //Event eintragen
@@ -81,7 +80,6 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
       
       //In Events nach bestimmter ID suchen
       String sEvent = createdEvent.getId();
-      //String sTestId = "123456";
       Event foundEvent = client.events().get(calendarId, sEvent).execute();
       Log.d(TAG, "foundEvent-ID: " + foundEvent.getId());
       

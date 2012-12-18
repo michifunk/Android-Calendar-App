@@ -25,17 +25,13 @@ import android.util.Log;
 public class UpdateEvents implements ITblTest {
   
   final static String TAG = "Klasse: UpdatEvents";
-  InitDB initDB;
+  static InitDB initDB; //Static, da für alle Instanzen
+//SQLiteDatabase initDB;
 
   
 public void checkEvents(Context context, CalendarSample calendarSample, int calIndex){
-    //this.context = context;
-    this.initDB = new InitDB (context);
-    Cursor cur = initDB.getReadableDatabase().rawQuery(
-        "SELECT * FROM " + TBL_TEST, null); /* +
-         " WHERE " + COL_ID + "= ?",
-        new String[] { String.valueOf( 2 ) } ); */
-    
+    UpdateEvents.initDB = new InitDB(context);     
+    Cursor cur = initDB.getReadableDatabase().rawQuery("SELECT * FROM " + TBL_TEST, null);      
     Log.d(TAG, "SQL-Select done");
     
     if (cur.isBeforeFirst()){
@@ -53,21 +49,18 @@ public void checkEvents(Context context, CalendarSample calendarSample, int calI
     else {
         Log.i( "DB", "DB leer." );
         }    
-cur.close();        
-//initDB.close();    
+cur.close();
+initDB.close();
+  
   }
 public void addEventId(String eventId, String vlName){
 
-  String sqlquery= "UPDATE " + TBL_TEST + 
-                   " SET " + COL_G_EVENT_ID + " = '" + eventId +  
-                   "' WHERE " + COL_VL_NAME + " = '" + vlName + "'"; 
-  Log.d( "Query", sqlquery );
-  //Log.d( "initDB: ", initDB.toString() );
-
-  initDB.getWritableDatabase().execSQL(sqlquery);
-  
-  
+    String sqlquery= "UPDATE " + TBL_TEST + 
+                     " SET " + COL_G_EVENT_ID + " = '" + eventId +  
+                     "' WHERE " + COL_VL_NAME + " = '" + vlName + "';"; 
+    Log.d( "Query", sqlquery );
+    initDB.getWritableDatabase().execSQL(sqlquery);
+    }  
 }
 
 
-}

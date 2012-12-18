@@ -21,7 +21,7 @@ import android.util.Log;
 /**
  * @author MEF@google.com (Michael Funk)
  *
- *Klasse für DB-Interaktionen
+ * DIESE KLASSE WIRD NICHT MEHR VERWENDET!!!
  */
 public class DBActions implements ITblTest{
   
@@ -51,8 +51,8 @@ public class DBActions implements ITblTest{
                                              cur.getColumnIndex( COL_VL_NR )) );
             Log.i( TAG, COL_VL_NAME          + ": " + cur.getString(  
                                              cur.getColumnIndex( COL_VL_NAME  )) );
-            Log.i( TAG, COL_DATUM            + ": " + cur.getString(  
-                                             cur.getColumnIndex( COL_DATUM  )) );
+            Log.i( TAG, COL_START_DATUM            + ": " + cur.getString(  
+                                             cur.getColumnIndex( COL_START_DATUM  )) );
             Log.i( TAG, COL_STUDIENGANG      + ": " + cur.getString(  
                                              cur.getColumnIndex( COL_STUDIENGANG  )) );
             long lMaster =  cur.getLong( cur.getColumnIndex( COL_MASTERSTUDIENGANG ));

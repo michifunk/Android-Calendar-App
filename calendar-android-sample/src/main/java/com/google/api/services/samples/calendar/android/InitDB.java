@@ -33,7 +33,7 @@ public class InitDB extends SQLiteOpenHelper implements ITblTest{
 private static final String DB_NAME = "dbtest.db";
 
 /** Version des Schemas. */
-private static final int DB_VERSION = 3;    //Erhöhen wenn Tabellenschema geändert wird!!
+private static final int DB_VERSION = 4;    //Erhöhen wenn Tabellenschema geändert wird!!
 
 /**
  * Der Konstruktor benötigt als Input-Parameter den Context der Anwendung.
@@ -45,8 +45,8 @@ public InitDB( Context context ) {
   super( context, DB_NAME, null, DB_VERSION );  
   
   final String MNAME = "InitDB()";  
-      final String TAG = CNAME + MNAME;
-      if( DBG ) Log.v( TAG, "entering..." );
+  final String TAG = CNAME + MNAME;
+  if( DBG ) Log.v( TAG, "entering..." );
       
   if( DBG ) Log.v( TAG, "...exiting" );
 }
@@ -114,23 +114,35 @@ private void erzeugeTestdaten( SQLiteDatabase db ) {
                        COL_VL_NR                + ", " + 
                        COL_VL_NAME              + ", " +                      
                        COL_STUDIENGANG          + ", " + 
-                       COL_MASTERSTUDIENGANG    + ", " + 
-                       COL_DATUM                + " ) VALUES( ?, ?, ?, ?, ? )" );
+                       COL_MASTERSTUDIENGANG    + ", " +
+                       COL_START_DATUM          + ", " +
+                       COL_END_DATUM            + 
+                  ") VALUES( ?, ?, ?, ?, ?, ? )" );
   db.beginTransaction();
 
   try {      
-      stm.bindLong  ( 1, 111111                  );
-      stm.bindString( 2, "Programmieren für Noobs");
-      stm.bindString( 3, "Wirtschaftsinformatik" );
-      stm.bindLong  ( 4, 0                       );
-      stm.bindString( 5, "2012-12-08"            );
+      stm.bindLong  ( 1, 111111                     );
+      stm.bindString( 2, "Programmieren für Noobs"  );
+      stm.bindString( 3, "Wirtschaftsinformatik"    );
+      stm.bindLong  ( 4, 0                          );
+      stm.bindString( 5, "2012-12-19T10:00:00+08:00");//date format based on RFC 3339
+      stm.bindString( 6, "2012-12-12T14:00:00+08:00");
       stm.executeInsert();
 
-      stm.bindLong  ( 1, 222222                  );
-      stm.bindString( 2, "Angewandtes Prozess MGMT");
-      stm.bindString( 3, "Wirtschaftsinformatik" );
-      stm.bindLong  ( 4, 1                       );
-      stm.bindString( 5, "2012-12-09"            );
+      stm.bindLong  ( 1, 222222                     );
+      stm.bindString( 2, "Angewandtes Prozess MGMT" );
+      stm.bindString( 3, "Wirtschaftsinformatik"    );
+      stm.bindLong  ( 4, 1                          );
+      stm.bindString( 5, "2012-12-19T10:00:00+08:00");
+      stm.bindString( 6, "2012-12-12T14:00:00+08:00");
+      stm.executeInsert();
+      
+      stm.bindLong  ( 1, 333333                     );
+      stm.bindString( 2, "Projekt Management"       );
+      stm.bindString( 3, "Wirtschaftsinformatik"    );
+      stm.bindLong  ( 4, 0                          );
+      stm.bindString( 5, "2012-12-20T10:00:00+08:00");
+      stm.bindString( 6, "2012-12-20T14:00:00+08:00");
       stm.executeInsert();
       
     db.setTransactionSuccessful();

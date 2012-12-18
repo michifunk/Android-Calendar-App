@@ -46,7 +46,11 @@ public interface ITblTest {
 
    /** Ein Datum.<br>
     *   DATE */  
-    String COL_DATUM = "geb_dat";
+    String COL_START_DATUM = "start_date";
+    
+    /** Ein zweites Datum.<br>
+     *   DATE */  
+     String COL_END_DATUM = "end_date";
     
     /** Google-Event-ID, wird von Google vergeben */  
     String COL_G_EVENT_ID = "G_eventID";
@@ -54,7 +58,7 @@ public interface ITblTest {
     /** Liste aller Attribute der Tabelle */
     String[] ALL_COLS_STUDENT = { COL_ID           , COL_VL_NR, 
                                       COL_VL_NAME         , COL_STUDIENGANG, 
-                                      COL_MASTERSTUDIENGANG, COL_DATUM, COL_G_EVENT_ID };
+                                      COL_MASTERSTUDIENGANG, COL_START_DATUM, COL_END_DATUM, COL_G_EVENT_ID };
 
     /** Create table statement */
     String CREATE_TBL_TEST = "CREATE TABLE " + TBL_TEST + "(" +
@@ -63,6 +67,7 @@ public interface ITblTest {
         COL_VL_NAME             + " TEXT NOT NULL, "    +
         COL_STUDIENGANG         + " TEXT, "             +
         COL_MASTERSTUDIENGANG   + " BOOLEAN NOT NULL, " +
-        COL_DATUM               + " DATE, "  +
+        COL_START_DATUM               + " DATE, "  +
+        COL_END_DATUM               + " DATE, "  +
         COL_G_EVENT_ID          + " TEXT)";       
 }

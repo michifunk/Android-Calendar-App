@@ -137,10 +137,12 @@ public final class CalendarSample extends ListActivity {
     gotAccount();
     
     
-    /* DB Implementations (MEF) */
-    DBActions dbActions = new DBActions();
-    dbActions.initialization(this);
-    
+    /* DB Implementations (MEF) 
+     * 
+     * DB erstellen falls noch nicht vorhanden
+     * DBActions dbActions = new DBActions();
+     * dbActions.initialization(this);
+    * */
   }
 
   @SuppressWarnings("deprecation")
