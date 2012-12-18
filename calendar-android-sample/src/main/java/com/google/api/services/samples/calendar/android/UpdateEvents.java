@@ -25,36 +25,49 @@ import android.util.Log;
 public class UpdateEvents implements ITblTest {
   
   final static String TAG = "Klasse: UpdatEvents";
+  InitDB initDB;
+
   
-  void checkEvents(Context context, CalendarSample calendarSample, int calIndex){
-    
-    InitDB initDB = new InitDB (context);
+public void checkEvents(Context context, CalendarSample calendarSample, int calIndex){
+    //this.context = context;
+    this.initDB = new InitDB (context);
     Cursor cur = initDB.getReadableDatabase().rawQuery(
         "SELECT * FROM " + TBL_TEST, null); /* +
          " WHERE " + COL_ID + "= ?",
         new String[] { String.valueOf( 2 ) } ); */
     
-    Log.d(TAG, "SQL-Select executed");
+    Log.d(TAG, "SQL-Select done");
     
     if (cur.isBeforeFirst()){
         while( cur.moveToNext() ){  
-          Log.d(TAG, "Event ID = " + cur.getString(cur.getColumnIndex(COL_G_EVENT_ID)));         
+          Log.d(TAG, "Event ID in DB = " + cur.getString(cur.getColumnIndex(COL_G_EVENT_ID)));         
             if (cur.isNull(cur.getColumnIndex(COL_G_EVENT_ID)) )             
             {
-              //Event anlegen in Kalender
-              Log.d(TAG, "Entering IsNull-If-Block");              
+              //Event anlegen in Kalender                           
               String sVlName = cur.getString(cur.getColumnIndex(COL_VL_NAME));
               new AsyncAddEvent2(calendarSample, calIndex, sVlName).execute(); 
             }
-                      
+            else Log.d(TAG, "Event bereits im Kalender. ID: " + cur.getString(cur.getColumnIndex(COL_G_EVENT_ID)));         
         }
     }
     else {
         Log.i( "DB", "DB leer." );
-        }
-    
+        }    
 cur.close();        
-initDB.close();    
+//initDB.close();    
   }
+public void addEventId(String eventId, String vlName){
+
+  String sqlquery= "UPDATE " + TBL_TEST + 
+                   " SET " + COL_G_EVENT_ID + " = '" + eventId +  
+                   "' WHERE " + COL_VL_NAME + " = '" + vlName + "'"; 
+  Log.d( "Query", sqlquery );
+  //Log.d( "initDB: ", initDB.toString() );
+
+  initDB.getWritableDatabase().execSQL(sqlquery);
+  
+  
+}
+
 
 }

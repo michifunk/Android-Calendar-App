@@ -71,9 +71,13 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
         
     
     try {
-      Event createdEvent = client.events().insert(calendarId, event).execute();      
+      //Event eintragen
+      Event createdEvent = client.events().insert(calendarId, event).execute();
       Log.d(TAG, "Event-ID: " + createdEvent.getId());
       
+      //Event-ID zum speichern übergeben. 
+      UpdateEvents updateEvents = new UpdateEvents();
+      updateEvents.addEventId(createdEvent.getId(), sVlName);
       
       //In Events nach bestimmter ID suchen
       String sEvent = createdEvent.getId();
