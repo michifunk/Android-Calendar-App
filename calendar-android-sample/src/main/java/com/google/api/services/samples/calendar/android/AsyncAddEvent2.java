@@ -24,6 +24,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -36,15 +38,17 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
   private final ProgressDialog dialog;
   private final int calendarIndex;
   private final String sVlName;
+  private final String sDatum;
   private com.google.api.services.calendar.Calendar client;
   private static final String TAG = "AsyncAddEvent-Klasse";
 
-  AsyncAddEvent2(CalendarSample calendarSample, int calendarIndex, String sVlName) {
+  AsyncAddEvent2(CalendarSample calendarSample, int calendarIndex, String sVlName, String sDatum) {
     this.calendarSample = calendarSample;
     client = calendarSample.client;
     this.calendarIndex = calendarIndex;
     dialog = new ProgressDialog(calendarSample);
     this.sVlName = sVlName;
+    this.sDatum = sDatum;
   }
 
   @Override
@@ -61,11 +65,19 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
     event.setSummary(sVlName);
     event.setLocation("Berlin HWR Schöneberg");
     event.setColorId("11"); //11 -> rot
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");//spec for RFC3339  
+    Date d = null;
+    try {
+      d = sdf.parse(sDatum);
+    } catch (ParseException exception) {
+      // TODO Auto-generated catch block
+      exception.printStackTrace();
+    }
+    //Datumberechnung von Date zu DateTime und dann EventTime ;) 
+    DateTime dstart = new DateTime(d, TimeZone.getTimeZone("UTC"));
+    event.setStart ( new EventDateTime().setDateTime(dstart));
        
-    Date startDate = new Date();
-    Date endDate = new Date(startDate.getTime() + 3600000);
-    DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
-    event.setStart(new EventDateTime().setDateTime(start));
+    Date endDate = new Date(d.getTime() + 3600000);
     DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
     event.setEnd(new EventDateTime().setDateTime(end)); 
     

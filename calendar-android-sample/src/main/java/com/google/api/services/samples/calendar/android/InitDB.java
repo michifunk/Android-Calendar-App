@@ -145,6 +145,22 @@ private void erzeugeTestdaten( SQLiteDatabase db ) {
       stm.bindString( 6, "2012-12-20T14:00:00+08:00");
       stm.executeInsert();
       
+      stm.bindLong  ( 1, 444444                     );
+      stm.bindString( 2, "Operations Management"       );
+      stm.bindString( 3, "Wirtschaftsinformatik"    );
+      stm.bindLong  ( 4, 0                          );
+      stm.bindString( 5, "2012-12-26T10:00:00+00:00");
+      stm.bindString( 6, "2012-12-28T14:00:00+08:00");
+      stm.executeInsert();
+      
+      stm.bindLong  ( 1, 555555                     );
+      stm.bindString( 2, "Schlafkurs für Michi"       );
+      stm.bindString( 3, "Wirtschaftsinformatik"    );
+      stm.bindLong  ( 4, 1                          );
+      stm.bindString( 5, "2012-12-28T10:00:00+00:00");
+      stm.bindString( 6, "2012-12-28T14:00:00+00:00");
+      stm.executeInsert();
+      
     db.setTransactionSuccessful();
   } catch( Throwable ex ) {
     Log.e( TAG, "Fehler beim Einfügen eines Testdatensatzes. " + ex );

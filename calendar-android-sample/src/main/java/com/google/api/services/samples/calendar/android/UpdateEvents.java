@@ -41,7 +41,8 @@ public void checkEvents(Context context, CalendarSample calendarSample, int calI
             {
               //Event anlegen in Kalender                           
               String sVlName = cur.getString(cur.getColumnIndex(COL_VL_NAME));
-              new AsyncAddEvent2(calendarSample, calIndex, sVlName).execute(); 
+              String sDatum = cur.getString(cur.getColumnIndex(COL_START_DATUM)); //Datumsübergabe für AddEvent
+              new AsyncAddEvent2(calendarSample, calIndex, sVlName, sDatum).execute(); 
             }
             else Log.d(TAG, "Event bereits im Kalender. ID: " + cur.getString(cur.getColumnIndex(COL_G_EVENT_ID)));         
         }
