@@ -24,16 +24,16 @@ import android.util.Log;
  * @author MEF@google.com (Michael Funk)
  *
  */
-public class InitDB extends SQLiteOpenHelper implements ITblTest{
+public class InitDB extends SQLiteOpenHelper implements ITblStudentEvent{
 
   private static final boolean DBG = true;   //DBG for debugging
   private static final String CNAME = "InitDB.";
   
   /** Name der Datenbankdatei. */
-private static final String DB_NAME = "dbtest.db";
+  private static final String DB_NAME = "dbStudentApp.db";
 
-/** Version des Schemas. */
-private static final int DB_VERSION = 4;    //Erhöhen wenn Tabellenschema geändert wird!!
+  /** Version des Schemas. */
+  private static final int DB_VERSION = 20;    //Erhöhen wenn Tabellenschema geändert wird!!
 
 /**
  * Der Konstruktor benötigt als Input-Parameter den Context der Anwendung.
@@ -85,14 +85,15 @@ public void onCreate( SQLiteDatabase db ) {
 public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion) {
   
   final String MNAME = "onUpgrade()";  
-      final String TAG = CNAME + MNAME;
-      if( DBG ){
-          Log.v( TAG, "entering..." );
+  final String TAG = CNAME + MNAME;
+  if( DBG )
+  {
+    Log.v( TAG, "entering..." );
     Log.v( TAG, "Upgrading database from version " + oldVersion +
                " to " + newVersion + ", which will destroy all old data" );
-      }
+  }
       
-  db.execSQL( "DROP TABLE IF EXISTS " + TBL_TEST );    
+  db.execSQL( "DROP TABLE IF EXISTS " + TBL_EVENTS );    
   onCreate( db );
   
   if( DBG ) Log.v( TAG, "...exiting" );
@@ -104,72 +105,54 @@ public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion) {
  * @param db
  */
 private void erzeugeTestdaten( SQLiteDatabase db ) {
-
   final String MNAME = "onUpgrade()";  
-      final String TAG = CNAME + MNAME;
-      if( DBG ) Log.v( TAG, "entering..." );      
+  final String TAG = CNAME + MNAME;
+  if( DBG ) Log.v( TAG, "entering..." );      
       
   final SQLiteStatement stm = db.compileStatement( 
-                 "INSERT INTO " + TBL_TEST      + "( " + 
-                       COL_VL_NR                + ", " + 
-                       COL_VL_NAME              + ", " +                      
-                       COL_STUDIENGANG          + ", " + 
-                       COL_MASTERSTUDIENGANG    + ", " +
-                       COL_START_DATUM          + ", " +
-                       COL_END_DATUM            + 
-                  ") VALUES( ?, ?, ?, ?, ?, ? )" );
+                 "INSERT INTO " + TBL_EVENTS      + "( " + 
+                     COL_EVENT_NAME     + ", " +
+                     COL_EVENT_NUMBER   + ", " +
+                     COL_EVENT_PERSON   + ", " +
+                     COL_START_DATE     + ", " +
+                     COL_END_DATE       + ", " + 
+                     COL_REC_FREQUENCE + ") VALUES( ?, ?, ?, ?, ?, ? )" );
   db.beginTransaction();
 
   try {      
-      stm.bindLong  ( 1, 111111                     );
-      stm.bindString( 2, "Programmieren für Noobs"  );
-      stm.bindString( 3, "Wirtschaftsinformatik"    );
-      stm.bindLong  ( 4, 0                          );
-      stm.bindString( 5, "2012-12-19T10:00:00+08:00");//date format based on RFC 3339
-      stm.bindString( 6, "2012-12-12T14:00:00+08:00");
+      stm.bindString( 1, "Programmieren für Noobs"      );
+      stm.bindString( 2, "VL 111111.1"                   );
+      stm.bindString( 3, "Axel Benz"                    );
+      stm.bindString( 4, "2012-12-23T10:00:00+00:00"    );//date format based on RFC 3339
+      stm.bindString( 5, "2012-12-23T14:00:00+00:00"    );
+      stm.bindString( 6, "");
       stm.executeInsert();
 
-      stm.bindLong  ( 1, 222222                     );
-      stm.bindString( 2, "Angewandtes Prozess MGMT" );
-      stm.bindString( 3, "Wirtschaftsinformatik"    );
-      stm.bindLong  ( 4, 1                          );
-      stm.bindString( 5, "2012-12-19T10:00:00+08:00");
-      stm.bindString( 6, "2012-12-12T14:00:00+08:00");
+      stm.bindString( 1, "tägliches hardcore programm XY");
+      stm.bindString( 2, "VL 222222.2");
+      stm.bindString( 3, "Musterdozent");
+      stm.bindString( 4, "2012-12-26T16:00:00+00:00");
+      stm.bindString( 5, "2012-12-26T18:00:00+00:00");
+      stm.bindString( 6, "DAILY");
       stm.executeInsert();
       
-      stm.bindLong  ( 1, 333333                     );
-      stm.bindString( 2, "Projekt Management"       );
-      stm.bindString( 3, "Wirtschaftsinformatik"    );
-      stm.bindLong  ( 4, 0                          );
-      stm.bindString( 5, "2012-12-20T10:00:00+08:00");
-      stm.bindString( 6, "2012-12-20T14:00:00+08:00");
+      stm.bindString( 1, "Statistik Tutorium (wöchentl.)");
+      stm.bindString( 2, "VL 333333.3");
+      stm.bindString( 3, "Ein strebsamer Student");
+      stm.bindString( 4, "2012-12-26T20:00:00+00:00");
+      stm.bindString( 5, "2012-12-26T24:00:00+00:00");
+      stm.bindString( 6, "WEEKLY");
       stm.executeInsert();
       
-      stm.bindLong  ( 1, 444444                     );
-      stm.bindString( 2, "Operations Management"       );
-      stm.bindString( 3, "Wirtschaftsinformatik"    );
-      stm.bindLong  ( 4, 0                          );
-      stm.bindString( 5, "2012-12-26T10:00:00+00:00");
-      stm.bindString( 6, "2012-12-28T14:00:00+08:00");
-      stm.executeInsert();
       
-      stm.bindLong  ( 1, 555555                     );
-      stm.bindString( 2, "Schlafkurs für Michi"       );
-      stm.bindString( 3, "Wirtschaftsinformatik"    );
-      stm.bindLong  ( 4, 1                          );
-      stm.bindString( 5, "2012-12-28T10:00:00+00:00");
-      stm.bindString( 6, "2012-12-28T14:00:00+00:00");
-      stm.executeInsert();
       
-    db.setTransactionSuccessful();
-  } catch( Throwable ex ) {
-    Log.e( TAG, "Fehler beim Einfügen eines Testdatensatzes. " + ex );
-  } finally { 
-      db.endTransaction(); 
-      stm.close();
-  }    
-  
-  if( DBG ) Log.v( TAG, "...exiting" );
-}
-
+      db.setTransactionSuccessful();
+    } catch( Throwable ex ) {
+      Log.e( TAG, "Fehler beim Einfügen eines Testdatensatzes. " + ex );
+    } finally { 
+        db.endTransaction(); 
+        stm.close();
+    }    
+    if( DBG ) Log.v( TAG, "...exiting" );
+  }
 }

@@ -22,7 +22,7 @@ import android.util.Log;
  * @author MEF@google.com (Your Name Here)
  *
  */
-public class UpdateEvents implements ITblTest {
+public class UpdateEvents implements ITblStudentEvent {
   
   final static String TAG = "Klasse: UpdatEvents";
   static InitDB initDB; //Static, da für alle Instanzen
@@ -31,7 +31,7 @@ public class UpdateEvents implements ITblTest {
   
 public void checkEvents(Context context, CalendarSample calendarSample, int calIndex){
     UpdateEvents.initDB = new InitDB(context);     
-    Cursor cur = initDB.getReadableDatabase().rawQuery("SELECT * FROM " + TBL_TEST, null);      
+    Cursor cur = initDB.getReadableDatabase().rawQuery("SELECT * FROM " + TBL_EVENTS, null);      
     Log.d(TAG, "SQL-Select done");
     
     if (cur.isBeforeFirst()){
@@ -39,10 +39,12 @@ public void checkEvents(Context context, CalendarSample calendarSample, int calI
           Log.d(TAG, "Event ID in DB = " + cur.getString(cur.getColumnIndex(COL_G_EVENT_ID)));         
             if (cur.isNull(cur.getColumnIndex(COL_G_EVENT_ID)) )             
             {
-              //Event anlegen in Kalender                           
-              String sVlName = cur.getString(cur.getColumnIndex(COL_VL_NAME));
-              String sDatum = cur.getString(cur.getColumnIndex(COL_START_DATUM)); //Datumsübergabe für AddEvent
-              new AsyncAddEvent2(calendarSample, calIndex, sVlName, sDatum).execute(); 
+              //Event-Infos aus DB auslesen und übergeben                          
+              String sVlName = cur.getString(cur.getColumnIndex(COL_EVENT_NAME));
+              String sStartDate = cur.getString(cur.getColumnIndex(COL_START_DATE)); //Datumsübergabe für AddEvent
+              String sEndDate = cur.getString(cur.getColumnIndex(COL_END_DATE));
+              String sFrequence = cur.getString(cur.getColumnIndex(COL_REC_FREQUENCE)); 
+              new AsyncAddEvent2(calendarSample, calIndex, sVlName, sStartDate, sEndDate, sFrequence).execute(); 
             }
             else Log.d(TAG, "Event bereits im Kalender. ID: " + cur.getString(cur.getColumnIndex(COL_G_EVENT_ID)));         
         }
@@ -56,9 +58,9 @@ initDB.close();
   }
 public void addEventId(String eventId, String vlName){
 
-    String sqlquery= "UPDATE " + TBL_TEST + 
+    String sqlquery= "UPDATE " + TBL_EVENTS + 
                      " SET " + COL_G_EVENT_ID + " = '" + eventId +  
-                     "' WHERE " + COL_VL_NAME + " = '" + vlName + "';"; 
+                     "' WHERE " + COL_EVENT_NAME + " = '" + vlName + "';"; 
     Log.d( "Query", sqlquery );
     initDB.getWritableDatabase().execSQL(sqlquery);
     }  
