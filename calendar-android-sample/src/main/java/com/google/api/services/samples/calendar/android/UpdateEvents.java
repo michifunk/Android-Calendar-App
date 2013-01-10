@@ -64,6 +64,26 @@ public void addEventId(String eventId, String vlName){
     Log.d( "Query", sqlquery );
     initDB.getWritableDatabase().execSQL(sqlquery);
     }  
+
+public void deleteEvent(String eventId){
+
+  String sqlquery= "DELETE FROM" + TBL_EVENTS + 
+                   "' WHERE " + COL_G_EVENT_ID + " = '" + eventId + "';"; 
+  Log.d( "Query", sqlquery );
+  initDB.getWritableDatabase().execSQL(sqlquery);
+  } 
+
+public void changeEvent(String eventId, String sVlName, String sStartDate, String sEndDate, String sFrequency  ){
+
+  String sqlquery= "UPDATE " + TBL_EVENTS + 
+      " SET " + COL_EVENT_NAME + " = '" + sVlName +  
+      " SET " + COL_REC_FREQUENCE + " = '" + sFrequency +
+      " SET " + COL_START_DATE + " = '" + sStartDate + 
+      " SET " + COL_END_DATE + " = '" + sEndDate +
+      "' WHERE " + COL_G_EVENT_ID + " = '" + eventId + "';"; 
+  Log.d( "Query", sqlquery );
+  initDB.getWritableDatabase().execSQL(sqlquery);
+  } 
 }
 
 
