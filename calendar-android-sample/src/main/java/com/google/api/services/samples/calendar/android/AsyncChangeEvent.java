@@ -17,7 +17,6 @@ package com.google.api.services.samples.calendar.android;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-import com.google.api.services.calendar.model.Events;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -135,53 +134,4 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
     dialog.dismiss();
     calendarSample.refresh();
   }
-  
-  @SuppressWarnings("unused")
-  private String getEvent(String calendarId, String eventId)
-  {
-    //In Events nach bestimmter ID suchen
-    Event foundEvent = null;
-    try {
-      foundEvent = client.events().get(calendarId, eventId).execute();
-    } catch (IOException exception) {
-      // TODO Auto-generated catch block
-      exception.printStackTrace();
-    }
-    return foundEvent.getId();
-  }
-  
-  @SuppressWarnings("unused")
-  private void listEvents(String calendarId)
-  {
-  //Liste aller events eines Kalenders ausgeben
-    Events eventsList = null;
-    try {
-      eventsList = client.events().list(calendarId).execute();
-    } catch (IOException exception) {
-      // TODO Auto-generated catch block
-      exception.printStackTrace();
-    }
-    while (true) 
-    {
-      Log.d(TAG, "Eventliste:");
-      for (Event eItem : eventsList.getItems()) 
-      {
-        Log.d(TAG, "Event-Name: " + eItem.getSummary());
-      }
-      String pageToken = eventsList.getNextPageToken();
-      if (pageToken != null && !pageToken.isEmpty()) 
-      { //Achtung, 'isEmpty() benötigt min API9. Hab ich im Manifest geändert.
-        try {
-          eventsList = client.events().list("primary").setPageToken(pageToken).execute();
-        } catch (IOException exception) {
-          // TODO Auto-generated catch block
-          exception.printStackTrace();
-        }
-      } else 
-      {
-        break;
-      }
-    }
-  }
-
 }
