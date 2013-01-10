@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * @author MEF@google.com (Your Name Here)
+ * @author MEF@google.com (Your Name Here)  PASCAL KÖHN
  *
  */
 class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
