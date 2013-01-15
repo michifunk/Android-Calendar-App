@@ -33,7 +33,7 @@ public class InitDB extends SQLiteOpenHelper implements ITblStudentEvent{
   private static final String DB_NAME = "dbStudentApp.db";
 
   /** Version des Schemas. */
-  private static final int DB_VERSION = 20;    //Erhöhen wenn Tabellenschema geändert wird!!
+  private static final int DB_VERSION = 26;    //Erhöhen wenn Tabellenschema/Testdaten geändert wird!!
 
 /**
  * Der Konstruktor benötigt als Input-Parameter den Context der Anwendung.
@@ -120,27 +120,27 @@ private void erzeugeTestdaten( SQLiteDatabase db ) {
   db.beginTransaction();
 
   try {      
-      stm.bindString( 1, "Programmieren für Noobs"      );
-      stm.bindString( 2, "VL 111111.1"                   );
+      stm.bindString( 1, "Einmaliges Programmieren für Noobs"      );
+      stm.bindString( 2, "VL 111111.1"                  );
       stm.bindString( 3, "Axel Benz"                    );
-      stm.bindString( 4, "2012-12-23T10:00:00+00:00"    );//date format based on RFC 3339
-      stm.bindString( 5, "2012-12-23T14:00:00+00:00"    );
+      stm.bindString( 4, "2013-01-15T10:00:00+00:00"    );//date format based on RFC 3339
+      stm.bindString( 5, "2013-01-15T14:00:00+00:00"    );
       stm.bindString( 6, "");
       stm.executeInsert();
 
-      stm.bindString( 1, "tägliches hardcore programm XY");
+      stm.bindString( 1, "Eine weitere Vorlesung");
       stm.bindString( 2, "VL 222222.2");
       stm.bindString( 3, "Musterdozent");
-      stm.bindString( 4, "2012-12-26T16:00:00+00:00");
-      stm.bindString( 5, "2012-12-26T18:00:00+00:00");
-      stm.bindString( 6, "DAILY");
+      stm.bindString( 4, "2013-01-15T16:00:00+00:00");
+      stm.bindString( 5, "2013-01-15T18:00:00+00:00");
+      stm.bindString( 6, "WEEKLY");
       stm.executeInsert();
       
       stm.bindString( 1, "Statistik Tutorium (wöchentl.)");
       stm.bindString( 2, "VL 333333.3");
       stm.bindString( 3, "Ein strebsamer Student");
-      stm.bindString( 4, "2012-12-26T20:00:00+00:00");
-      stm.bindString( 5, "2012-12-26T24:00:00+00:00");
+      stm.bindString( 4, "2013-01-15T20:00:00+00:00");
+      stm.bindString( 5, "2013-01-15T24:00:00+00:00");
       stm.bindString( 6, "WEEKLY");
       stm.executeInsert();
       

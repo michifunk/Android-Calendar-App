@@ -60,7 +60,7 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
 
   @Override
   protected void onPreExecute() {
-    dialog.setMessage("Adding event...");
+    dialog.setMessage("Changing event...");
     dialog.show();
   }
 
@@ -113,13 +113,13 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
         }
      }     
      try {
-      //Event eintragen
+      //Event im Kalender updaten
       Event updatedEvent = client.events().update(calendarId, sEventId, foundEvent).execute();
       Log.d(TAG, "Event-ID: " + updatedEvent.getId());
       
-      //Event-ID zum speichern übergeben. 
+      //Event in der DB ändern 
       UpdateEvents updateEvents = new UpdateEvents();
-      updateEvents.addEventId(updatedEvent.getId(), sVlName);
+      updateEvents.changeEvent(sEventId, sVlName, sStartDate, sEndDate, sFrequency);
       
     } catch (IOException e) {
       calendarSample.handleGoogleException(e);

@@ -108,7 +108,7 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
       Event createdEvent = client.events().insert(calendarId, event).execute();
       Log.d(TAG, "Event-ID: " + createdEvent.getId());
       
-      //Event-ID zum speichern übergeben. 
+      //Google-Event-ID zum speichern in der DB übergeben. 
       UpdateEvents updateEvents = new UpdateEvents();
       updateEvents.addEventId(createdEvent.getId(), sVlName);
       
@@ -125,7 +125,6 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
     dialog.dismiss();
     calendarSample.refresh();
   }
-  
   @SuppressWarnings("unused")
   private String getEvent(String calendarId, String eventId)
   {
@@ -173,6 +172,5 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
       }
     }
   }
-
 }
 

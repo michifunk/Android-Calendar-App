@@ -136,13 +136,6 @@ public final class CalendarSample extends ListActivity {
     registerForContextMenu(getListView());
     gotAccount();
     
-    
-    /* DB Implementations (MEF) 
-     * 
-     * DB erstellen falls noch nicht vorhanden
-     * DBActions dbActions = new DBActions();
-     * dbActions.initialization(this);
-    * */
   }
 
   @SuppressWarnings("deprecation")

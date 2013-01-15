@@ -44,6 +44,7 @@ public void checkEvents(Context context, CalendarSample calendarSample, int calI
               String sStartDate = cur.getString(cur.getColumnIndex(COL_START_DATE)); //Datumsübergabe für AddEvent
               String sEndDate = cur.getString(cur.getColumnIndex(COL_END_DATE));
               String sFrequence = cur.getString(cur.getColumnIndex(COL_REC_FREQUENCE)); 
+              //Event einfügen
               new AsyncAddEvent2(calendarSample, calIndex, sVlName, sStartDate, sEndDate, sFrequence).execute(); 
             }
             else Log.d(TAG, "Event bereits im Kalender. ID: " + cur.getString(cur.getColumnIndex(COL_G_EVENT_ID)));         
@@ -51,36 +52,41 @@ public void checkEvents(Context context, CalendarSample calendarSample, int calI
     }
     else {
         Log.i( "DB", "DB leer." );
-        }    
+        } 
+//    Löschen eines events
+//    new AsyncDeleteEvent(calendarSample, calIndex, "b89kgs5mocrgsj6fga31mo5btc").execute();
+//    new AsyncDeleteEvent(calendarSample, calIndex, "lk4prfipfralhlfhmh1o7mv520").execute(); 
+//    new AsyncDeleteEvent(calendarSample, calIndex, "35lesclpuetvab7rahi3elol3g").execute(); 
+    
+//    Ändern eines events
+//    new AsyncChangeEvent(calendarSample, calIndex, "Geänderte Vorlesung", "2013-01-15T15:30:00+00:00", "2013-01-15T16:30:00+00:00", "", "27mjsetgl03icsvo5pt2hjnbv8").execute();
+    
 cur.close();
 initDB.close();
   
   }
 public void addEventId(String eventId, String vlName){
-
-    String sqlquery= "UPDATE " + TBL_EVENTS + 
+  String sqlquery = "UPDATE " + TBL_EVENTS + 
                      " SET " + COL_G_EVENT_ID + " = '" + eventId +  
                      "' WHERE " + COL_EVENT_NAME + " = '" + vlName + "';"; 
-    Log.d( "Query", sqlquery );
-    initDB.getWritableDatabase().execSQL(sqlquery);
-    }  
+  Log.d( "Query", sqlquery );
+  initDB.getWritableDatabase().execSQL(sqlquery);
+  }  
 
 public void deleteEvent(String eventId){
-
-  String sqlquery= "DELETE FROM" + TBL_EVENTS + 
-                   "' WHERE " + COL_G_EVENT_ID + " = '" + eventId + "';"; 
+  String sqlquery = "DELETE FROM " + TBL_EVENTS + 
+                    " WHERE " + COL_G_EVENT_ID + " = '" + eventId + "';"; 
   Log.d( "Query", sqlquery );
   initDB.getWritableDatabase().execSQL(sqlquery);
   } 
 
-public void changeEvent(String eventId, String sVlName, String sStartDate, String sEndDate, String sFrequency  ){
-
-  String sqlquery= "UPDATE " + TBL_EVENTS + 
-      " SET " + COL_EVENT_NAME + " = '" + sVlName +  
-      " SET " + COL_REC_FREQUENCE + " = '" + sFrequency +
-      " SET " + COL_START_DATE + " = '" + sStartDate + 
-      " SET " + COL_END_DATE + " = '" + sEndDate +
-      "' WHERE " + COL_G_EVENT_ID + " = '" + eventId + "';"; 
+public void changeEvent(String eventId, String sVlName, String sStartDate, String sEndDate, String sFrequency){
+  String sqlquery =  "UPDATE " + TBL_EVENTS + 
+                    " SET " + COL_EVENT_NAME      + " = '" + sVlName +    "', "
+                            + COL_START_DATE      + " = '" + sStartDate + "', "
+                            + COL_END_DATE        + " = '" + sEndDate + "', " 
+                            + COL_REC_FREQUENCE   + " = '" + sFrequency + "'"
+                    + " WHERE " + COL_G_EVENT_ID  + " = '" + eventId + "';"; 
   Log.d( "Query", sqlquery );
   initDB.getWritableDatabase().execSQL(sqlquery);
   } 
