@@ -1,32 +1,18 @@
-/*
- * Copyright (c) 2011 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- */
-
-package com.google.api.services.samples.calendar.android;
+package de.hwrberlin.app.prostapp.g2;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
 /**
- * @author MEF@google.com (Your Name Here)
+ * @author M. Funk and P. Köhn
  *
  */
 public class UpdateEvents implements ITblStudentEvent {
   
   final static String TAG = "Klasse: UpdatEvents";
   static InitDB initDB; //Static, da für alle Instanzen
-//SQLiteDatabase initDB;
+
 
   
 public void checkEvents(Context context, CalendarSample calendarSample, int calIndex){
@@ -53,13 +39,14 @@ public void checkEvents(Context context, CalendarSample calendarSample, int calI
     else {
         Log.i( "DB", "DB leer." );
         } 
+    
 //    Löschen eines events
-//    new AsyncDeleteEvent(calendarSample, calIndex, "b89kgs5mocrgsj6fga31mo5btc").execute();
+    new AsyncDeleteEvent(calendarSample, calIndex, "oc0ktnensmdr38d290cdosnq8k").execute();
 //    new AsyncDeleteEvent(calendarSample, calIndex, "lk4prfipfralhlfhmh1o7mv520").execute(); 
 //    new AsyncDeleteEvent(calendarSample, calIndex, "35lesclpuetvab7rahi3elol3g").execute(); 
     
 //    Ändern eines events
-//    new AsyncChangeEvent(calendarSample, calIndex, "Geänderte Vorlesung", "2013-01-15T15:30:00+00:00", "2013-01-15T16:30:00+00:00", "", "27mjsetgl03icsvo5pt2hjnbv8").execute();
+    new AsyncChangeEvent(calendarSample, calIndex, "Geänderte Vorlesung", "2013-01-15T15:30:00+00:00", "2013-01-15T16:30:00+00:00", "", "3d97nt3g4phnps54raveutcdm4").execute();
     
 cur.close();
 initDB.close();

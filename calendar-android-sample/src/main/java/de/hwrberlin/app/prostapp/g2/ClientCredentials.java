@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.google.api.services.samples.calendar.android;
+package de.hwrberlin.app.prostapp.g2;
 
 import com.google.common.base.Preconditions;
 
@@ -31,7 +31,7 @@ import com.google.common.base.Preconditions;
  */
 public class ClientCredentials {
 
-  /** Value of the "API key" shown under "Simple API Access". */
+  //Hier muss der Key aus der API-Console eingetragen werden
   public static final String KEY = "AIzaSyAcYAJBXeoyQqxonHvhuLylg73p2DEjQH0";
 
   public static void errorIfNotSpecified() {

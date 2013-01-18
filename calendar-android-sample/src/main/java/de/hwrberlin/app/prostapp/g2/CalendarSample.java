@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.google.api.services.samples.calendar.android;
+package de.hwrberlin.app.prostapp.g2;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.GoogleHeaders;
@@ -24,8 +24,6 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.client.util.DateTime;
-import com.google.api.services.calendar.model.Calendar;
 import com.google.common.collect.Lists;
 
 import android.accounts.Account;
@@ -50,14 +48,12 @@ import android.widget.ArrayAdapter;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Sample for Google Calendar API v3. It shows how to authenticate, get calendars, add a new
- * calendar, update it, and delete it.
+ * Sample-Class for Google Calendar API v3. It shows how to authenticate and get calendars.
  *
  * <p>
  * To enable logging of HTTP requests/responses, change {@link #LOGGING_LEVEL} to
@@ -69,6 +65,11 @@ adb shell setprop log.tag.HttpTransport DEBUG
  * </pre>
  *
  * @author Yaniv Inbar
+ * 
+ * @Customized by Michael Funk and Pascal Köhn
+ * 
+ * 
+ * 
  */
 public final class CalendarSample extends ListActivity {
 
@@ -80,16 +81,8 @@ public final class CalendarSample extends ListActivity {
   private static final String AUTH_TOKEN_TYPE = "cl";
 
   private static final int MENU_ACCOUNTS = 0;
-
-  private static final int MENU_ADD = 1;
-
-  private static final int CONTEXT_EDIT = 0;
-
-  private static final int CONTEXT_DELETE = 1;
   
-  private static final int CONTEXT_NEWEVENT = 2;    //test
-  
-  private static final int CONTEXT_SYNCEVENTS = 3;  //add events from DB
+  private static final int CONTEXT_SYNCEVENTS = 1;  //add events from DB
 
   private static final int REQUEST_AUTHENTICATE = 0;
 
@@ -134,8 +127,7 @@ public final class CalendarSample extends ListActivity {
     Logger.getLogger("com.google.api.client").setLevel(LOGGING_LEVEL);
     accountManager = new GoogleAccountManager(this);
     registerForContextMenu(getListView());
-    gotAccount();
-    
+    gotAccount();   
   }
 
   @SuppressWarnings("deprecation")
@@ -229,21 +221,22 @@ public final class CalendarSample extends ListActivity {
   @Override
   //Menu-Button
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(0, MENU_ADD, 0, "New Calendar");
+//    menu.add(0, MENU_ADD, 0, "New Calendar");
     if (accountManager.getAccounts().length >= 2) {
       menu.add(0, MENU_ACCOUNTS, 0, "Switch Account");
     }
     return true;
   }
 
+  //Menu-Button
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case MENU_ADD:
-        Calendar entry = new Calendar();
-        entry.setSummary("Calendar " + new DateTime(new Date()));
-        new AsyncInsertCalendar(this, entry).execute();
-        return true;
+//      case MENU_ADD:
+//        Calendar entry = new Calendar();
+//        entry.setSummary("Calendar " + new DateTime(new Date()));
+//        new AsyncInsertCalendar(this, entry).execute();
+//        return true;
       case MENU_ACCOUNTS:
         chooseAccount();
         return true;
@@ -255,10 +248,7 @@ public final class CalendarSample extends ListActivity {
   //Context-Menu für Unterkalender
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    menu.add(0, CONTEXT_EDIT, 0, "Update Title");
-    menu.add(0, CONTEXT_DELETE, 0, "Delete");
-    menu.add(0, CONTEXT_NEWEVENT, 0, "Create new event");
-    menu.add(0, CONTEXT_SYNCEVENTS, 0, "Sync events with DB");
+    menu.add(0, CONTEXT_SYNCEVENTS, 0, "Insert Events from DB");
   }
 
   @Override
@@ -268,22 +258,10 @@ public final class CalendarSample extends ListActivity {
     CalendarInfo calendarInfo = calendars.get(calendarIndex);
 
     switch (item.getItemId()) {
-      case CONTEXT_EDIT:
-        Calendar entry = new Calendar();
-        entry.setSummary(calendarInfo.summary + " UPDATED " + new DateTime(new Date()));
-        new AsyncUpdateCalendar(this, calendarIndex, entry).execute();
-        return true;
-      case CONTEXT_DELETE: 
-        new AsyncDeleteCalendar(this, calendarIndex).execute();
-        return true;
-      case CONTEXT_NEWEVENT:    //Event einfügen
-        new AsyncAddEvent(this, calendarIndex).execute();       
-        return true;
-      case CONTEXT_SYNCEVENTS:    //Event einfügen
+      case CONTEXT_SYNCEVENTS:    //Event einfügen bzw. prüfen ob schon vorhanden
         UpdateEvents updateEvents = new UpdateEvents();
         updateEvents.checkEvents(this, this, calendarIndex);
-        return true;
-               
+        return true;             
       default:
         return super.onContextItemSelected(item);
     }
@@ -318,7 +296,17 @@ public final class CalendarSample extends ListActivity {
       }
     });
   }
-
+  
+  //Benachrichtigung ausgeben
+  void setDialog(final String sTitle, final String sText){
+	  this.runOnUiThread(new Runnable() {
+		  public void run() {
+			  new AlertDialog.Builder(CalendarSample.this).setTitle(sTitle).setMessage(
+			            sText).setNeutralButton("ok", null).create().show();
+		  }
+	});
+  }
+ 
   void refresh() {
     Collections.sort(calendars);
     setListAdapter(

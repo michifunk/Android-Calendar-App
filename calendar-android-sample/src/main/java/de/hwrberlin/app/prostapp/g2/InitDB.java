@@ -1,18 +1,4 @@
-/*
- * Copyright (c) 2011 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- */
-
-package com.google.api.services.samples.calendar.android;
+package de.hwrberlin.app.prostapp.g2;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,19 +7,21 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 /**
- * @author MEF@google.com (Michael Funk)
+ * @author M. Funk and P. Köhn
+ * 
+ * based on Wolfgang Lang's DbDemo.java
  *
  */
 public class InitDB extends SQLiteOpenHelper implements ITblStudentEvent{
 
-  private static final boolean DBG = true;   //DBG for debugging
+  private static final boolean DBG = true;   //Set DBG for debugging
   private static final String CNAME = "InitDB.";
   
   /** Name der Datenbankdatei. */
   private static final String DB_NAME = "dbStudentApp.db";
 
   /** Version des Schemas. */
-  private static final int DB_VERSION = 26;    //Erhöhen wenn Tabellenschema/Testdaten geändert wird!!
+  private static final int DB_VERSION = 30;    //Erhöhen wenn Tabellenschema/Testdaten geändert werden!!
 
 /**
  * Der Konstruktor benötigt als Input-Parameter den Context der Anwendung.
@@ -100,7 +88,7 @@ public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion) {
 } 
 
 /**
- * Erzeugt einige Testdatensätze.
+ * Erzeugt einige Veranstaltungen als Testdatensätze.
  * 
  * @param db
  */

@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.google.api.services.samples.calendar.android;
+package de.hwrberlin.app.prostapp.g2;
 
 /**
  * Class that holds information about a Calendar.

@@ -1,18 +1,4 @@
-/*
- * Copyright (c) 2011 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- */
-
-package com.google.api.services.samples.calendar.android;
+package de.hwrberlin.app.prostapp.g2;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
@@ -30,8 +16,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
 
+
+
 /**
- * @author MEF@google.com (Your Name Here)
+ * Für
+ * 
+ * @author M.Funk and P. Köhn
  *
  */
 class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
@@ -43,7 +33,7 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
   private final String sStartDate;
   private final String sEndDate;  
   private com.google.api.services.calendar.Calendar client;
-  private static final String TAG = "AsyncAddEvent-Klasse";
+  private static final String TAG = "AsyncAddEvent2-Klasse";
 
   AsyncAddEvent2(CalendarSample calendarSample, int calendarIndex, String sVlName, String sStartDate, String sEndDate, String sFrequency) {
     this.calendarSample = calendarSample;
@@ -53,14 +43,13 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
     this.sVlName = sVlName;
     this.sFrequency = sFrequency;
     this.sStartDate = sStartDate;
-    this.sEndDate = sEndDate;
-    
+    this.sEndDate = sEndDate; 
   }
 
   @Override
   protected void onPreExecute() {
     dialog.setMessage("Adding event...");
-    dialog.show();
+//    dialog.show();
   }
 
   @Override
@@ -68,9 +57,9 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
     String calendarId = calendarSample.calendars.get(calendarIndex).id;
     Date dateStart = null;
     Date dateEnd= null; 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");//spec for RFC3339  
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");//Format für RFC3339  
     
-    //Datumberechnung von Date zu DateTime und dann EventTime ;)
+    //Datum-Formatierung: Date -> DateTime -> EventTime
     try 
     {
       dateStart = sdf.parse(sStartDate);
@@ -79,7 +68,7 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
     } catch (ParseException exception) 
     {
       exception.printStackTrace();
-      Log.d(TAG, "Fehler beim parsen");
+      Log.d(TAG, "Fehler beim parsen eines Datums");
     }    
     DateTime dtStart = new DateTime(dateStart, TimeZone.getTimeZone("UTC"));
     DateTime dtEnd = new DateTime(dateEnd, TimeZone.getTimeZone("UTC"));
@@ -88,17 +77,16 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
     event.setStart( new EventDateTime().setDateTime(dtStart).setTimeZone("UTC"));
     event.setEnd( new EventDateTime().setDateTime(dtEnd).setTimeZone("UTC"));
     event.setSummary(sVlName);
-    event.setLocation("Berlin HWR Schöneberg");
-    event.setColorId("11"); //11 -> rot
-    event.setDescription("Hier könnte Ihre Beschreibung stehen");
+    event.setLocation("HWR Schöneberg, Berlin");
+    event.setColorId("11"); //11 => rot
+    event.setDescription("Hier könnte eine sinnvolle Beschreibung stehen");
     
-    Log.d(TAG, "sFrequence BEFORE IF = " + sFrequency);
     if( sFrequency != null  )
     {
         if( sFrequency.equals("WEEKLY") || sFrequency.equals("DAILY")  )
         {
           String sRecurrenceContent = "RRULE:FREQ=" + sFrequency;
-          //String sRecurrenceContent = "RRULE:FREQ=" + sFrequence + ";UNTIL=20140101T100000-07:00";
+//          String sRecurrenceContent = "RRULE:FREQ=" + sFrequency + ";UNTIL=20130303T100000+00:00";
           Log.d(TAG, "sRecContent: " + sRecurrenceContent);
           event.setRecurrence(Arrays.asList(sRecurrenceContent));
         }
@@ -122,22 +110,10 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
 
   @Override
   protected void onPostExecute(Void result) {
-    dialog.dismiss();
+//    dialog.dismiss();
     calendarSample.refresh();
   }
-  @SuppressWarnings("unused")
-  private String getEvent(String calendarId, String eventId)
-  {
-    //In Events nach bestimmter ID suchen
-    Event foundEvent = null;
-    try {
-      foundEvent = client.events().get(calendarId, eventId).execute();
-    } catch (IOException exception) {
-      // TODO Auto-generated catch block
-      exception.printStackTrace();
-    }
-    return foundEvent.getId();
-  }
+  
   
   @SuppressWarnings("unused")
   private void listEvents(String calendarId)
@@ -159,7 +135,7 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
       }
       String pageToken = eventsList.getNextPageToken();
       if (pageToken != null && !pageToken.isEmpty()) 
-      { //Achtung, 'isEmpty() benötigt min API9. Hab ich im Manifest geändert.
+      { //Achtung, 'isEmpty() benötigt min API9.  Manifest wurde dementsprechend angepasst.
         try {
           eventsList = client.events().list("primary").setPageToken(pageToken).execute();
         } catch (IOException exception) {
@@ -173,4 +149,3 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
     }
   }
 }
-
