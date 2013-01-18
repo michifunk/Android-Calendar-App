@@ -25,7 +25,7 @@ import java.util.TimeZone;
  *
  */
 class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
-  private final CalendarSample calendarSample;
+  private final GoogleCalendarConnection googleCalendarConnection;
   private final ProgressDialog dialog;
   private final int calendarIndex;
   private final String sVlName;
@@ -35,11 +35,11 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
   private com.google.api.services.calendar.Calendar client;
   private static final String TAG = "AsyncAddEvent2-Klasse";
 
-  AsyncAddEvent2(CalendarSample calendarSample, int calendarIndex, String sVlName, String sStartDate, String sEndDate, String sFrequency) {
-    this.calendarSample = calendarSample;
-    client = calendarSample.client;
+  AsyncAddEvent2(GoogleCalendarConnection googleCalendarConnection, int calendarIndex, String sVlName, String sStartDate, String sEndDate, String sFrequency) {
+    this.googleCalendarConnection = googleCalendarConnection;
+    client = googleCalendarConnection.client;
     this.calendarIndex = calendarIndex;
-    dialog = new ProgressDialog(calendarSample);
+    dialog = new ProgressDialog(googleCalendarConnection);
     this.sVlName = sVlName;
     this.sFrequency = sFrequency;
     this.sStartDate = sStartDate;
@@ -54,7 +54,7 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
 
   @Override
   protected Void doInBackground(Void... arg0) {
-    String calendarId = calendarSample.calendars.get(calendarIndex).id;
+    String calendarId = googleCalendarConnection.calendars.get(calendarIndex).id;
     Date dateStart = null;
     Date dateEnd= null; 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");//Format für RFC3339  
@@ -101,9 +101,9 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
       updateEvents.addEventId(createdEvent.getId(), sVlName);
       
     } catch (IOException e) {
-      calendarSample.handleGoogleException(e);
+      googleCalendarConnection.handleGoogleException(e);
     } finally {
-      calendarSample.onRequestCompleted();
+      googleCalendarConnection.onRequestCompleted();
     }
     return null;
   }
@@ -111,7 +111,7 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
   @Override
   protected void onPostExecute(Void result) {
 //    dialog.dismiss();
-    calendarSample.refresh();
+    googleCalendarConnection.refresh();
   }
   
   

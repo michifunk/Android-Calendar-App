@@ -15,7 +15,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
-            android:name="de.hwrberlin.app.prostapp.g2.CalendarSample"
+            android:name=".GoogleCalendarConnection"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

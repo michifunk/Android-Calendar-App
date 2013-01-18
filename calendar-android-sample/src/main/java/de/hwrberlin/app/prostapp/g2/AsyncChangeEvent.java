@@ -21,7 +21,7 @@ import java.util.TimeZone;
  *
  */
 public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
-  private final CalendarSample calendarSample;
+  private final GoogleCalendarConnection googleCalendarConnection;
   private final ProgressDialog dialog;
   private final int calendarIndex;
   private final String sVlName;
@@ -34,11 +34,11 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
   
  
   
-  AsyncChangeEvent(CalendarSample calendarSample, int calendarIndex, String sVlName, String sStartDate, String sEndDate, String sFrequency, String sEventId) {
-    this.calendarSample = calendarSample;
-    client = calendarSample.client;
+  AsyncChangeEvent(GoogleCalendarConnection googleCalendarConnection, int calendarIndex, String sVlName, String sStartDate, String sEndDate, String sFrequency, String sEventId) {
+    this.googleCalendarConnection = googleCalendarConnection;
+    client = googleCalendarConnection.client;
     this.calendarIndex = calendarIndex;
-    dialog = new ProgressDialog(calendarSample);
+    dialog = new ProgressDialog(googleCalendarConnection);
     this.sVlName = sVlName;
     this.sFrequency = sFrequency;
     this.sStartDate = sStartDate;
@@ -55,7 +55,7 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
 
   @Override
   protected Void doInBackground(Void... arg0) {
-    String calendarId = calendarSample.calendars.get(calendarIndex).id;
+    String calendarId = googleCalendarConnection.calendars.get(calendarIndex).id;
     
     
   //In Events nach bestimmter ID suchen
@@ -107,14 +107,14 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
 	      updateEvents.changeEvent(sEventId, sVlName, sStartDate, sEndDate, sFrequency);	      
 	      
 	    } catch (IOException e) {
-	      calendarSample.handleGoogleException(e);
+	      googleCalendarConnection.handleGoogleException(e);
 	    } finally {
-	      calendarSample.onRequestCompleted();
+	      googleCalendarConnection.onRequestCompleted();
 	    }
-	   calendarSample.setDialog(sVlName, "Event wurde erfolgreich geändert.");
+	   googleCalendarConnection.setDialog(sVlName, "Event wurde erfolgreich geändert.");
 	 }
     else {
-    	calendarSample.setDialog(sVlName, "Event nicht im Kalender gefunden.");
+    	googleCalendarConnection.setDialog(sVlName, "Event nicht im Kalender gefunden.");
     }
 	return null;
 	    
@@ -123,6 +123,6 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
   @Override
   protected void onPostExecute(Void result) {
     dialog.dismiss();
-    calendarSample.refresh(); 
+    googleCalendarConnection.refresh(); 
   }
 }

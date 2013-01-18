@@ -15,7 +15,7 @@ public class UpdateEvents implements ITblStudentEvent {
 
 
   
-public void checkEvents(Context context, CalendarSample calendarSample, int calIndex){
+public void checkEvents(Context context, GoogleCalendarConnection googleCalendarConnection, int calIndex){
     UpdateEvents.initDB = new InitDB(context);     
     Cursor cur = initDB.getReadableDatabase().rawQuery("SELECT * FROM " + TBL_EVENTS, null);      
     Log.d(TAG, "SQL-Select done");
@@ -31,7 +31,7 @@ public void checkEvents(Context context, CalendarSample calendarSample, int calI
               String sEndDate = cur.getString(cur.getColumnIndex(COL_END_DATE));
               String sFrequence = cur.getString(cur.getColumnIndex(COL_REC_FREQUENCE)); 
               //Event einfügen
-              new AsyncAddEvent2(calendarSample, calIndex, sVlName, sStartDate, sEndDate, sFrequence).execute(); 
+              new AsyncAddEvent2(googleCalendarConnection, calIndex, sVlName, sStartDate, sEndDate, sFrequence).execute(); 
             }
             else Log.d(TAG, "Event bereits im Kalender. ID: " + cur.getString(cur.getColumnIndex(COL_G_EVENT_ID)));         
         }
@@ -41,12 +41,12 @@ public void checkEvents(Context context, CalendarSample calendarSample, int calI
         } 
     
 //    Löschen eines events
-    new AsyncDeleteEvent(calendarSample, calIndex, "oc0ktnensmdr38d290cdosnq8k").execute();
-//    new AsyncDeleteEvent(calendarSample, calIndex, "lk4prfipfralhlfhmh1o7mv520").execute(); 
-//    new AsyncDeleteEvent(calendarSample, calIndex, "35lesclpuetvab7rahi3elol3g").execute(); 
+    new AsyncDeleteEvent(googleCalendarConnection, calIndex, "oc0ktnensmdr38d290cdosnq8k").execute();
+//    new AsyncDeleteEvent(googleCalendarConnection, calIndex, "lk4prfipfralhlfhmh1o7mv520").execute(); 
+//    new AsyncDeleteEvent(googleCalendarConnection, calIndex, "35lesclpuetvab7rahi3elol3g").execute(); 
     
 //    Ändern eines events
-    new AsyncChangeEvent(calendarSample, calIndex, "Geänderte Vorlesung", "2013-01-15T15:30:00+00:00", "2013-01-15T16:30:00+00:00", "", "3d97nt3g4phnps54raveutcdm4").execute();
+    new AsyncChangeEvent(googleCalendarConnection, calIndex, "Geänderte Vorlesung", "2013-01-15T15:30:00+00:00", "2013-01-15T16:30:00+00:00", "", "3d97nt3g4phnps54raveutcdm4").execute();
     
 cur.close();
 initDB.close();

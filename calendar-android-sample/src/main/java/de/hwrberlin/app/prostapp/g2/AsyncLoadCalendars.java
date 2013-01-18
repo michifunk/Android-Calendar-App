@@ -16,14 +16,14 @@ import java.io.IOException;
  */
 class AsyncLoadCalendars extends AsyncTask<Void, Void, Void> {
 
-  private final CalendarSample calendarSample;
+  private final GoogleCalendarConnection googleCalendarConnection;
   private final ProgressDialog dialog;
   private com.google.api.services.calendar.Calendar client;
 
-  AsyncLoadCalendars(CalendarSample calendarSample) {
-    this.calendarSample = calendarSample;
-    client = calendarSample.client;
-    dialog = new ProgressDialog(calendarSample);
+  AsyncLoadCalendars(GoogleCalendarConnection googleCalendarConnection) {
+    this.googleCalendarConnection = googleCalendarConnection;
+    client = googleCalendarConnection.client;
+    dialog = new ProgressDialog(googleCalendarConnection);
   }
 
   @Override
@@ -35,7 +35,7 @@ class AsyncLoadCalendars extends AsyncTask<Void, Void, Void> {
   @Override
   protected Void doInBackground(Void... arg0) {
     try {
-      calendarSample.calendars.clear();
+      googleCalendarConnection.calendars.clear();
       
 //      com.google.api.services.calendar.Calendar.CalendarList.List list =
 //          client.calendarList().list();
@@ -44,7 +44,7 @@ class AsyncLoadCalendars extends AsyncTask<Void, Void, Void> {
 //      if (feed.getItems() != null) {
 //        for (CalendarListEntry calendar : feed.getItems()) {
 //          CalendarInfo info = new CalendarInfo(calendar.getId(), calendar.getSummary());
-//          calendarSample.calendars.add(info);
+//          googleCalendarConnection.calendars.add(info);
 //        }
       
       
@@ -52,12 +52,12 @@ class AsyncLoadCalendars extends AsyncTask<Void, Void, Void> {
       Calendar primCalendar = client.calendars().get("primary").execute();     
       if (primCalendar != null) {
 	      CalendarInfo info = new CalendarInfo(primCalendar.getId(), primCalendar.getSummary());
-	      calendarSample.calendars.add(info);
+	      googleCalendarConnection.calendars.add(info);
       }     
     } catch (IOException e) {
-      calendarSample.handleGoogleException(e);
+      googleCalendarConnection.handleGoogleException(e);
     } finally {
-      calendarSample.onRequestCompleted();
+      googleCalendarConnection.onRequestCompleted();
     }
     return null;
   }
@@ -65,6 +65,6 @@ class AsyncLoadCalendars extends AsyncTask<Void, Void, Void> {
   @Override
   protected void onPostExecute(Void result) {
     dialog.dismiss();
-    calendarSample.refresh();
+    googleCalendarConnection.refresh();
   }
 }

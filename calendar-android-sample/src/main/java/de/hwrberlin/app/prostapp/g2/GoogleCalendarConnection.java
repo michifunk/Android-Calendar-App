@@ -71,12 +71,12 @@ adb shell setprop log.tag.HttpTransport DEBUG
  * 
  * 
  */
-public final class CalendarSample extends ListActivity {
+public final class GoogleCalendarConnection extends ListActivity {
 
   /** Logging level for HTTP requests/responses. */
   private static final Level LOGGING_LEVEL = Level.OFF;
 
-  private static final String TAG = "CalendarSample";
+  private static final String TAG = "GoogleCalendarConnection";
 
   private static final String AUTH_TOKEN_TYPE = "cl";
 
@@ -118,7 +118,7 @@ public final class CalendarSample extends ListActivity {
     };
     client = new com.google.api.services.calendar.
         Calendar.Builder(transport, jsonFactory, requestInitializer)
-          .setApplicationName("Google-CalendarAndroidSample/1.0")
+          .setApplicationName("Google-CalendarApp")
           .setJsonHttpRequestInitializer(new GoogleKeyInitializer(ClientCredentials.KEY))
           .build();
     settings = getPreferences(MODE_PRIVATE);
@@ -166,7 +166,7 @@ public final class CalendarSample extends ListActivity {
     accountManager.getAccountManager().getAuthTokenByFeatures(GoogleAccountManager.ACCOUNT_TYPE,
         AUTH_TOKEN_TYPE,
         null,
-        CalendarSample.this,
+        GoogleCalendarConnection.this,
         null,
         null,
         new AccountManagerCallback<Bundle>() {
@@ -291,7 +291,7 @@ public final class CalendarSample extends ListActivity {
     Log.e(TAG, e.getMessage(), e);
     runOnUiThread(new Runnable() {
       public void run() {
-        new AlertDialog.Builder(CalendarSample.this).setTitle("Exception").setMessage(
+        new AlertDialog.Builder(GoogleCalendarConnection.this).setTitle("Exception").setMessage(
             e.getMessage()).setNeutralButton("ok", null).create().show();
       }
     });
@@ -301,7 +301,7 @@ public final class CalendarSample extends ListActivity {
   void setDialog(final String sTitle, final String sText){
 	  this.runOnUiThread(new Runnable() {
 		  public void run() {
-			  new AlertDialog.Builder(CalendarSample.this).setTitle(sTitle).setMessage(
+			  new AlertDialog.Builder(GoogleCalendarConnection.this).setTitle(sTitle).setMessage(
 			            sText).setNeutralButton("ok", null).create().show();
 		  }
 	});
