@@ -23,7 +23,7 @@ public class InitDB extends SQLiteOpenHelper implements ITblStudentEvent{
   private static final String DB_NAME = "dbStudentApp.db";
 
   /** Version des Schemas. */
-  private static final int DB_VERSION = 30;    //Erhöhen wenn Tabellenschema/Testdaten geändert werden!!
+  private static final int DB_VERSION = 31;    //Erhöhen wenn Tabellenschema/Testdaten geändert werden!!
 
 /**
  * Der Konstruktor benötigt als Input-Parameter den Context der Anwendung.
