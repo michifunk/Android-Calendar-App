@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 /**
+ * Initialisierung der Datenbank
+ * 
  * @author M. Funk and P. Köhn
  * 
  * based on Wolfgang Lang's DbDemo.java

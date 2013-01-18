@@ -20,7 +20,10 @@ class AsyncLoadCalendars extends AsyncTask<Void, Void, Void> {
   private final ProgressDialog dialog;
   private com.google.api.services.calendar.Calendar client;
 
-  AsyncLoadCalendars(GoogleCalendarConnection googleCalendarConnection) {
+  /**
+ * @param googleCalendarConnection
+ */
+AsyncLoadCalendars(GoogleCalendarConnection googleCalendarConnection) {
     this.googleCalendarConnection = googleCalendarConnection;
     client = googleCalendarConnection.client;
     dialog = new ProgressDialog(googleCalendarConnection);

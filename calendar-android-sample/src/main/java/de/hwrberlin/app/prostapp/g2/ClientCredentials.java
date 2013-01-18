@@ -27,7 +27,7 @@ import com.google.common.base.Preconditions;
  * the section at the bottom called "Simple API Access".
  * </p>
  *
- * @author Yaniv Inbar
+ * 
  */
 public class ClientCredentials {
 

@@ -52,7 +52,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
+/** 
  * Sample-Class for Google Calendar API v3. It shows how to authenticate and get calendars.
  *
  * <p>
@@ -297,8 +297,13 @@ public final class GoogleCalendarConnection extends ListActivity {
     });
   }
   
-  //Benachrichtigung ausgeben
-  void setDialog(final String sTitle, final String sText){
+ /**
+ * Benachrichtigung mittels AlertDialog ausgeben
+ * 
+ * @param sTitle
+ * @param sText
+ */
+void setDialog(final String sTitle, final String sText){
 	  this.runOnUiThread(new Runnable() {
 		  public void run() {
 			  new AlertDialog.Builder(GoogleCalendarConnection.this).setTitle(sTitle).setMessage(

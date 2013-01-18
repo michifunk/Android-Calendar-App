@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.util.Log;
 
 /**
+ * Klasse um die Events im Kalender und in der DB zu bearbeiten.
+ * 
  * @author M. Funk and P. Köhn
  *
  */
@@ -13,8 +15,17 @@ public class UpdateEvents implements ITblStudentEvent {
   final static String TAG = "Klasse: UpdatEvents";
   static InitDB initDB; //Static, da für alle Instanzen
 
-
   
+/**
+ * Die Methode schaut in der DB nach Events, die noch keine Google-ID haben.
+ * Diese werden dann über AsyncAddEvent in den Kalender eingefügt.
+ * Außerdem wird das Löschen und Ändern eines Events anhand der dafür implementierten
+ * Klassen beispielhaft dargestellt.
+ * 
+ * @param context
+ * @param googleCalendarConnection
+ * @param calIndex
+ */
 public void checkEvents(Context context, GoogleCalendarConnection googleCalendarConnection, int calIndex){
     UpdateEvents.initDB = new InitDB(context);     
     Cursor cur = initDB.getReadableDatabase().rawQuery("SELECT * FROM " + TBL_EVENTS, null);      
@@ -31,7 +42,7 @@ public void checkEvents(Context context, GoogleCalendarConnection googleCalendar
               String sEndDate = cur.getString(cur.getColumnIndex(COL_END_DATE));
               String sFrequence = cur.getString(cur.getColumnIndex(COL_REC_FREQUENCE)); 
               //Event einfügen
-              new AsyncAddEvent2(googleCalendarConnection, calIndex, sVlName, sStartDate, sEndDate, sFrequence).execute(); 
+              new AsyncAddEvent(googleCalendarConnection, calIndex, sVlName, sStartDate, sEndDate, sFrequence).execute(); 
             }
             else Log.d(TAG, "Event bereits im Kalender. ID: " + cur.getString(cur.getColumnIndex(COL_G_EVENT_ID)));         
         }
@@ -52,6 +63,10 @@ cur.close();
 initDB.close();
   
   }
+/**
+ * @param eventId
+ * @param vlName
+ */
 public void addEventId(String eventId, String vlName){
   String sqlquery = "UPDATE " + TBL_EVENTS + 
                      " SET " + COL_G_EVENT_ID + " = '" + eventId +  
@@ -60,6 +75,9 @@ public void addEventId(String eventId, String vlName){
   initDB.getWritableDatabase().execSQL(sqlquery);
   }  
 
+/**
+ * @param eventId
+ */
 public void deleteEvent(String eventId){
   String sqlquery = "DELETE FROM " + TBL_EVENTS + 
                     " WHERE " + COL_G_EVENT_ID + " = '" + eventId + "';"; 
@@ -67,6 +85,13 @@ public void deleteEvent(String eventId){
   initDB.getWritableDatabase().execSQL(sqlquery);
   } 
 
+/**
+ * @param eventId
+ * @param sVlName
+ * @param sStartDate
+ * @param sEndDate
+ * @param sFrequency
+ */
 public void changeEvent(String eventId, String sVlName, String sStartDate, String sEndDate, String sFrequency){
   String sqlquery =  "UPDATE " + TBL_EVENTS + 
                     " SET " + COL_EVENT_NAME      + " = '" + sVlName +    "', "

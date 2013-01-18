@@ -16,8 +16,6 @@ package de.hwrberlin.app.prostapp.g2;
 
 /**
  * Class that holds information about a Calendar.
- *
- * @author Ravi Mistry
  */
 class CalendarInfo implements Comparable<CalendarInfo> {
   String id;

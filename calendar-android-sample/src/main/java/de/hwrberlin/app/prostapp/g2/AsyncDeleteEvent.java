@@ -20,7 +20,12 @@ class AsyncDeleteEvent extends AsyncTask<Void, Void, Void> {
   private com.google.api.services.calendar.Calendar client;
   private final String sEventId;
 
-  AsyncDeleteEvent(GoogleCalendarConnection googleCalendarConnection, int calendarIndex, String sEventId) {
+  /**
+ * @param googleCalendarConnection
+ * @param calendarIndex
+ * @param sEventId
+ */
+AsyncDeleteEvent(GoogleCalendarConnection googleCalendarConnection, int calendarIndex, String sEventId) {
     this.googleCalendarConnection = googleCalendarConnection;
     client = googleCalendarConnection.client;  
     this.calendarIndex = calendarIndex;

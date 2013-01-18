@@ -16,6 +16,9 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
+ * Ist dafür Zuständig, dass über die Calendar-API Events im Kalender
+ * geändert werden.
+ * 
  * @author M.Funk and P. Köhn
  * 
  *
@@ -34,7 +37,16 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
   
  
   
-  AsyncChangeEvent(GoogleCalendarConnection googleCalendarConnection, int calendarIndex, String sVlName, String sStartDate, String sEndDate, String sFrequency, String sEventId) {
+  /**
+ * @param googleCalendarConnection
+ * @param calendarIndex
+ * @param sVlName
+ * @param sStartDate
+ * @param sEndDate
+ * @param sFrequency
+ * @param sEventId
+ */
+AsyncChangeEvent(GoogleCalendarConnection googleCalendarConnection, int calendarIndex, String sVlName, String sStartDate, String sEndDate, String sFrequency, String sEventId) {
     this.googleCalendarConnection = googleCalendarConnection;
     client = googleCalendarConnection.client;
     this.calendarIndex = calendarIndex;
@@ -44,7 +56,6 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
     this.sStartDate = sStartDate;
     this.sEndDate = sEndDate;
     this.sEventId = sEventId;
-
   }
 
   @Override
@@ -56,8 +67,7 @@ public class AsyncChangeEvent extends AsyncTask<Void, Void, Void> {
   @Override
   protected Void doInBackground(Void... arg0) {
     String calendarId = googleCalendarConnection.calendars.get(calendarIndex).id;
-    
-    
+       
   //In Events nach bestimmter ID suchen
     Event foundEvent = null;
     try {

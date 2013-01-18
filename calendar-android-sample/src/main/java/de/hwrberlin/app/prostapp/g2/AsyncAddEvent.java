@@ -19,12 +19,14 @@ import java.util.TimeZone;
 
 
 /**
- * Für
+ * Ist dafür Zuständig, dass über die Calendar-API Events in den Kalender
+ * eingefügt werden.
  * 
  * @author M.Funk and P. Köhn
  *
  */
-class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
+
+class AsyncAddEvent extends AsyncTask<Void, Void, Void> {
   private final GoogleCalendarConnection googleCalendarConnection;
   private final ProgressDialog dialog;
   private final int calendarIndex;
@@ -33,9 +35,17 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
   private final String sStartDate;
   private final String sEndDate;  
   private com.google.api.services.calendar.Calendar client;
-  private static final String TAG = "AsyncAddEvent2-Klasse";
+  private static final String TAG = "AsyncAddEvent-Klasse";
 
-  AsyncAddEvent2(GoogleCalendarConnection googleCalendarConnection, int calendarIndex, String sVlName, String sStartDate, String sEndDate, String sFrequency) {
+  /**
+ * @param googleCalendarConnection
+ * @param calendarIndex
+ * @param sVlName
+ * @param sStartDate
+ * @param sEndDate
+ * @param sFrequency
+ */
+AsyncAddEvent(GoogleCalendarConnection googleCalendarConnection, int calendarIndex, String sVlName, String sStartDate, String sEndDate, String sFrequency) {
     this.googleCalendarConnection = googleCalendarConnection;
     client = googleCalendarConnection.client;
     this.calendarIndex = calendarIndex;
@@ -115,10 +125,14 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
   }
   
   
-  @SuppressWarnings("unused")
+  /**
+   * Kann bei bedarf eine Liste aller Events im Kalender erstellen.
+   * 
+ * @param calendarId
+ */
+@SuppressWarnings("unused")
   private void listEvents(String calendarId)
   {
-  //Liste aller events eines Kalenders ausgeben
     Events eventsList = null;
     try {
       eventsList = client.events().list(calendarId).execute();
@@ -139,7 +153,6 @@ class AsyncAddEvent2 extends AsyncTask<Void, Void, Void> {
         try {
           eventsList = client.events().list("primary").setPageToken(pageToken).execute();
         } catch (IOException exception) {
-          // TODO Auto-generated catch block
           exception.printStackTrace();
         }
       } else 

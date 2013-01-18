@@ -15,6 +15,8 @@
 package de.hwrberlin.app.prostapp.g2;
 
 /**
+ * Gibt das Schema der Datenbank und Tabelle vor
+ * 
  * @author M. Funk and P. Köhn
  *
  */
