@@ -64,11 +64,9 @@ import java.util.logging.Logger;
 adb shell setprop log.tag.HttpTransport DEBUG
  * </pre>
  *
- * @author Yaniv Inbar
+ * @author Created by Yaniv Inbar. Customized by Michael Funk and Pascal Köhn.
  * 
- * @Customized by Michael Funk and Pascal Köhn
- * 
- * 
+ * @see https://github.com/michifunk/Android-Calendar-App/
  * 
  */
 public final class GoogleCalendarConnection extends ListActivity {
@@ -255,7 +253,6 @@ public final class GoogleCalendarConnection extends ListActivity {
   public boolean onContextItemSelected(MenuItem item) {
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
     int calendarIndex = (int) info.id;
-    CalendarInfo calendarInfo = calendars.get(calendarIndex);
 
     switch (item.getItemId()) {
       case CONTEXT_SYNCEVENTS:    //Event einfügen bzw. prüfen ob schon vorhanden
