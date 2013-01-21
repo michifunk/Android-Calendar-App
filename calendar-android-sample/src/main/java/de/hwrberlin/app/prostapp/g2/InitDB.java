@@ -62,10 +62,8 @@ public void onCreate( SQLiteDatabase db ) {
 
 /**
  * Wird aufgerufen, wenn sich die Version des Schemas geä¤ndert hat.
- * Im kontreten Fall wird die Datenbank gelälscht, mit neuem Schema wieder
- * aufgebaut und mit Testdaten gefüllt. In anderen FÃ¤llen kann es 
- * erforderlich sein, die bereits vorhanden Daten in die neuen Tabellen 
- * zu kopieren. 
+ * Im kontreten Fall wird die Datenbank gelölscht, mit neuem Schema wieder
+ * aufgebaut und mit Testdaten gefüllt.
  *  
  * @param db Aktuelle Datenbank-Verbindung
  * @param oldVersion bisherige Schemaversion
