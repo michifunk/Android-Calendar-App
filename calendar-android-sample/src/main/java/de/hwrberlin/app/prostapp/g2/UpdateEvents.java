@@ -52,7 +52,7 @@ public void checkEvents(Context context, GoogleCalendarConnection googleCalendar
         } 
     
 //    Löschen eines events
-//    new AsyncDeleteEvent(googleCalendarConnection, calIndex, "oc0ktnensmdr38d290cdosnq8k").execute();
+    new AsyncDeleteEvent(googleCalendarConnection, calIndex, "mumn9gquv3msomfe74abqc77ss").execute();
 //    new AsyncDeleteEvent(googleCalendarConnection, calIndex, "lk4prfipfralhlfhmh1o7mv520").execute(); 
 //    new AsyncDeleteEvent(googleCalendarConnection, calIndex, "35lesclpuetvab7rahi3elol3g").execute(); 
     

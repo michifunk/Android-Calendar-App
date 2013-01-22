@@ -111,7 +111,7 @@ AsyncAddEvent(GoogleCalendarConnection googleCalendarConnection, int calendarInd
       updateEvents.addEventId(createdEvent.getId(), sVlName);
       
     } catch (IOException e) {
-      googleCalendarConnection.handleGoogleException(e);
+//      googleCalendarConnection.handleGoogleException(e);
     } finally {
       googleCalendarConnection.onRequestCompleted();
     }
