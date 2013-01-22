@@ -127,6 +127,7 @@ AsyncAddEvent(GoogleCalendarConnection googleCalendarConnection, int calendarInd
   
   /**
    * Kann bei bedarf eine Liste aller Events im Kalender erstellen.
+   * Wird im Moment nicht verwendet.
    * 
  * @param calendarId
  */
@@ -149,7 +150,7 @@ AsyncAddEvent(GoogleCalendarConnection googleCalendarConnection, int calendarInd
       }
       String pageToken = eventsList.getNextPageToken();
       if (pageToken != null && !pageToken.isEmpty()) 
-      { //Achtung, 'isEmpty() benötigt min API9.  Manifest wurde dementsprechend angepasst.
+      { 
         try {
           eventsList = client.events().list("primary").setPageToken(pageToken).execute();
         } catch (IOException exception) {
